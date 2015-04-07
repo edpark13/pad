@@ -25,7 +25,7 @@ $(function() {
         ACTIVE = true;
     });
     $(".gem").mouseup(function() {
-        remove()
+        remove();
         ACTIVE = false;
     });
 });
@@ -51,17 +51,40 @@ COL1 = [00, 10, 20, 30, 40, 50, 60]
 
 function remove() {
     var list = [];
-    for (x=0; x < COL1.length; x++) {
-        var count = 1;
-        while ($("#" + COL1[x]).css("background-color") == $("#" + COL1[x + 1]).css("background-color")) {
-            count += 1;
-            x += 1;
-        }
-        if (count >= 3) {
-            for (y=0; y < count; y++) {
-                list.push(COL1[x-y]);
+    for (col=0; col < NUMCOLS; col++) {
+        for (row=0; row < NUMROWS; row++) {
+    // for (x=0; x < COL1.length; x++) {
+            var count = 1;
+            while ($("#" + row.toString() + col.toString()).css("background-color") == $("#" + (row+1).toString() + col.toString()).css("background-color")) {
+                count += 1;
+                row += 1;
+                alert(count)
+            }
+            if (count >= 3) {
+                for (y=0; y < count; y++) {
+                    var number = (row-y).toString() + col.toString();
+                    list.push(number);
+                }
             }
         }
     }
     console.log(list)
 }
+
+
+// function remove() {
+//     var list = [];
+//     for (x=0; x < COL1.length; x++) {
+//         var count = 1;
+//         while ($("#" + COL1[x]).css("background-color") == $("#" + COL1[x + 1]).css("background-color")) {
+//             count += 1;
+//             x += 1;
+//         }
+//         if (count >= 3) {
+//             for (y=0; y < count; y++) {
+//                 list.push(COL1[x-y]);
+//             }
+//         }
+//     }
+//     console.log(list)
+// }
