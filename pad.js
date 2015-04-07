@@ -7,19 +7,14 @@ ACTIVEGEM = 'black';
 
 $(function() {
     for (col=0; col < NUMCOLS; col++) {
-        var column = $("<div class='column'></div>");
         for (row=0; row < NUMROWS; row++) {
             var random = Math.floor(Math.random() * 6);
             var gem = $("<div class='gem'> </div>");
             gem.css("background-color", COLORS[random]);
             gem.css("top", row*GEMR+"px");
             gem.css("left", col*GEMR+"px");
-            gem.appendTo(column);
-            // if (ACTIVE) {
-            //     gem.mouseover(move)
-            // }
+            gem.appendTo("#board");
         }
-        column.appendTo("#board");
     }
     $(".gem").mousedown(function() {
         ACTIVE = true;
