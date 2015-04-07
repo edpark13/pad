@@ -1,0 +1,2 @@
+NUMROWS = 7;
+NUMCOLS = 6;
