@@ -21,12 +21,13 @@ $(function() {
         ACTIVEGEM = $(this);
         ACTIVE = true;
         move();
-        $(".gem").mouseup(function () {
-        return;
+        // $(".gem").mouseup(function () {
+        //     d.preventDefault();
+        // return;
         });
     });
+}
     //
-});
 
 var move = function(d) {
     $(".gem").mouseover(function () {
@@ -36,9 +37,9 @@ var move = function(d) {
             $(this).css("left", ACTIVEGEM.css("left"));
             ACTIVEGEM.css("top", top);
             ACTIVEGEM.css("left", left);
-            // ACTIVEGEM.mouseup(function (){
-            //     alert('hi')
-            //     return;
+            $(".gem").mouseup(function () {
+                d.preventDefault();
+            return;
             // })
 
     });
