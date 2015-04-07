@@ -1,9 +1,10 @@
-NUMROWS = 7;
-NUMCOLS = 6;
-GEMR = 50;
-COLORS = ["red", "blue", "green", "yellow", "purple", "pink"];
-ACTIVEGEM = 0;
-ACTIVE = false
+var NUMROWS = 7;
+var NUMCOLS = 6;
+var GEMR = 50;
+var COLORS = ["red", "blue", "green", "yellow", "purple", "pink"];
+var ACTIVEGEM = 0;
+var ACTIVE = false;
+var LIST = [];
 
 
 $(function() {
@@ -23,10 +24,13 @@ $(function() {
     $(".gem").mousedown(function() {
         ACTIVEGEM = $(this);
         ACTIVE = true;
+        LIST = [];
     });
     $(".gem").mouseup(function() {
-        remove();
+        removeCol();
+        removeRow();
         ACTIVE = false;
+        console.log(LIST);
     });
 });
 
@@ -46,45 +50,38 @@ function move() {
     }
 }
 
-COL1 = [00, 10, 20, 30, 40, 50, 60]
-
-
-function remove() {
-    var list = [];
+function removeCol() {
     for (col=0; col < NUMCOLS; col++) {
         for (row=0; row < NUMROWS; row++) {
-    // for (x=0; x < COL1.length; x++) {
             var count = 1;
-            while ($("#" + row.toString() + col.toString()).css("background-color") == $("#" + (row+1).toString() + col.toString()).css("background-color")) {
+            while ($("#" + row.toString() + col.toString()).css("background-color") == $("#" + (row + 1).toString() + col.toString()).css("background-color")) {
                 count += 1;
                 row += 1;
-                alert(count)
             }
             if (count >= 3) {
                 for (y=0; y < count; y++) {
                     var number = (row-y).toString() + col.toString();
-                    list.push(number);
+                    LIST.push(number);
                 }
             }
         }
     }
-    console.log(list)
 }
 
-
-// function remove() {
-//     var list = [];
-//     for (x=0; x < COL1.length; x++) {
-//         var count = 1;
-//         while ($("#" + COL1[x]).css("background-color") == $("#" + COL1[x + 1]).css("background-color")) {
-//             count += 1;
-//             x += 1;
-//         }
-//         if (count >= 3) {
-//             for (y=0; y < count; y++) {
-//                 list.push(COL1[x-y]);
-//             }
-//         }
-//     }
-//     console.log(list)
-// }
+function removeRow() {
+    for (col=0; col < NUMCOLS; col++) {
+        for (row=0; row < NUMROWS; row++) {
+            var count = 1;
+            while ($("#" + row.toString() + col.toString()).css("background-color") == $("#" + row.toString() + (col+1).toString()).css("background-color")) {
+                count += 1;
+                col += 1;
+            }
+            if (count >= 3) {
+                for (y=0; y < count; y++) {
+                    var number = row.toString() + (col-y).toString();
+                    LIST.push(number);
+                }
+            }
+        }
+    }
+}
