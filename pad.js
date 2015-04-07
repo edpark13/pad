@@ -2,8 +2,9 @@ NUMROWS = 7;
 NUMCOLS = 6;
 GEMR = 50;
 COLORS = ["red", "blue", "green", "yellow", "purple", "pink"];
-ACTIVE = false;
-ACTIVEGEM = 'black';
+ACTIVEGEM = 0;
+ACTIVE = false
+
 
 $(function() {
     for (col=0; col < NUMCOLS; col++) {
@@ -17,22 +18,26 @@ $(function() {
         }
     }
     $(".gem").mousedown(function() {
-        ACTIVE = true;
         ACTIVEGEM = $(this);
+        ACTIVE = true;
         move();
-    })
+    });
 });
 
 function move() {
-    $(".gem").mouseover(function () {
-        var tempcolor = $(this).css("background-color");
-        var color = ACTIVEGEM.css('background-color')
-        $(this).css("background-color", color);
-
-    })
-    $(".gem").mouseup(function() {
-        ACTIVE = false;
-        ACTIVEGEM = 'black';
-        console.log(ACTIVE)
-    })
+    if (ACTIVE == true) {
+        $(".gem").mouseover(function () {
+            var top = $(this).css("top");
+            var left = $(this).css("left");
+            $(this).css("top", ACTIVEGEM.css("top"));
+            $(this).css("left", ACTIVEGEM.css("left"));
+            ACTIVEGEM.css("top", top);
+            ACTIVEGEM.css("left", left);
+        });
+        $(".gem").mouseup(function () {
+            ACTIVE = false;
+            move();
+            return;
+        });
+    }
 }
