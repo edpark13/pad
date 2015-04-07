@@ -17,27 +17,24 @@ $(function() {
             gem.appendTo("#board");
         }
     }
+    $(".gem").mouseover(move);
     $(".gem").mousedown(function() {
         ACTIVEGEM = $(this);
         ACTIVE = true;
-        move();
+    });
+    $(".gem").mouseup(function() {
+        ACTIVE = false;
     });
 });
 
 function move() {
-    if (ACTIVE == true) {
-        $(".gem").mouseover(function () {
-            var top = $(this).css("top");
-            var left = $(this).css("left");
-            $(this).css("top", ACTIVEGEM.css("top"));
-            $(this).css("left", ACTIVEGEM.css("left"));
-            ACTIVEGEM.css("top", top);
-            ACTIVEGEM.css("left", left);
-        });
-        $(".gem").mouseup(function () {
-            ACTIVE = false;
-            move();
-            return;
-        });
+    console.log(ACTIVE);
+    if (ACTIVE) {
+        var top = $(this).css("top");
+        var left = $(this).css("left");
+        $(this).css("top", ACTIVEGEM.css("top"));
+        $(this).css("left", ACTIVEGEM.css("left"));
+        ACTIVEGEM.css("top", top);
+        ACTIVEGEM.css("left", left);
     }
 }
