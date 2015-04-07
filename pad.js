@@ -21,23 +21,26 @@ $(function() {
         ACTIVEGEM = $(this);
         ACTIVE = true;
         move();
+        $(".gem").mouseup(function () {
+        return;
+        });
     });
+    //
 });
 
-function move() {
-    if (ACTIVE == true) {
-        $(".gem").mouseover(function () {
+var move = function(d) {
+    $(".gem").mouseover(function () {
             var top = $(this).css("top");
             var left = $(this).css("left");
             $(this).css("top", ACTIVEGEM.css("top"));
             $(this).css("left", ACTIVEGEM.css("left"));
             ACTIVEGEM.css("top", top);
             ACTIVEGEM.css("left", left);
-        });
-        $(".gem").mouseup(function () {
-            ACTIVE = false;
-            move();
-            return;
-        });
-    }
+            // ACTIVEGEM.mouseup(function (){
+            //     alert('hi')
+            //     return;
+            // })
+
+    });
 }
+
