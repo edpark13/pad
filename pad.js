@@ -51,14 +51,14 @@ COL1 = [00, 10, 20, 30, 40, 50, 60]
 
 function remove() {
     var list = [];
-    for( x=0; x < COL1.length; x++){
+    for (x=0; x < COL1.length; x++) {
         var count = 1;
-        while($("#"+COL1[x]).css("background-color") == $("#"+COL1[x+1]).css("background-color")){
+        while ($("#" + COL1[x]).css("background-color") == $("#" + COL1[x + 1]).css("background-color")) {
             count += 1;
             x += 1;
         }
-        if(count >= 3){
-            for(y=0; y < count; y++){
+        if (count >= 3) {
+            for (y=0; y < count; y++) {
                 list.push(COL1[x-y]);
             }
         }
