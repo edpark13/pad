@@ -6,7 +6,6 @@ var ACTIVEGEM = 0;
 var ACTIVE = false;
 var LIST = [];
 
-
 $(function() {
     for (col=0; col < NUMCOLS; col++) {
         for (row=0; row < NUMROWS; row++) {
@@ -27,16 +26,15 @@ $(function() {
         LIST = [];
     });
     $(".gem").mouseup(function() {
-        removeCol();
-        removeRow();
+        // removeCol();
+        // removeRow();
+        removeGems("00", NaN, NaN);
         ACTIVE = false;
-        console.log(LIST);
     });
 });
 
 
 function move() {
-    console.log(ACTIVE);
     if (ACTIVE) {
         var top = $(this).css("top");
         var left = $(this).css("left");
@@ -50,38 +48,65 @@ function move() {
     }
 }
 
-function removeCol() {
-    for (col=0; col < NUMCOLS; col++) {
-        for (row=0; row < NUMROWS; row++) {
-            var count = 1;
-            while ($("#" + row.toString() + col.toString()).css("background-color") == $("#" + (row + 1).toString() + col.toString()).css("background-color")) {
-                count += 1;
-                row += 1;
-            }
-            if (count >= 3) {
-                for (y=0; y < count; y++) {
-                    var number = (row-y).toString() + col.toString();
-                    LIST.push(number);
-                }
-            }
-        }
-    }
-}
+// function removeCol() {
+//     for (col=0; col < NUMCOLS; col++) {
+//         for (row=0; row < NUMROWS; row++) {
+//             var count = 1;
+//             while ($("#" + row.toString() + col.toString()).css("background-color") == $("#" + (row + 1).toString() + col.toString()).css("background-color")) {
+//                 count += 1;
+//                 row += 1;
+//             }
+//             if (count >= 3) {
+//                 for (y=0; y < count; y++) {
+//                     var number = (row-y).toString() + col.toString();
+//                     LIST.push(number);
+//                 }
+//             }
+//         }
+//     }
+// }
 
-function removeRow() {
-    for (col=0; col < NUMCOLS; col++) {
-        for (row=0; row < NUMROWS; row++) {
-            var count = 1;
-            while ($("#" + row.toString() + col.toString()).css("background-color") == $("#" + row.toString() + (col+1).toString()).css("background-color")) {
-                count += 1;
-                col += 1;
-            }
-            if (count >= 3) {
-                for (y=0; y < count; y++) {
-                    var number = row.toString() + (col-y).toString();
-                    LIST.push(number);
+// function removeRow() {
+//     for (col=0; col < NUMCOLS; col++) {
+//         for (row=0; row < NUMROWS; row++) {
+//             var count = 1;
+//             while ($("#" + row.toString() + col.toString()).css("background-color") == $("#" + row.toString() + (col+1).toString()).css("background-color")) {
+//                 count += 1;
+//                 col += 1;
+//             }
+//             if (count >= 3) {
+//                 for (y=0; y < count; y++) {
+//                     var number = row.toString() + (col-y).toString();
+//                     LIST.push(number);
+//                 }
+//             }
+//         }
+//     }
+// }
+
+function removeGems(id, color, list) {
+    var row = parseInt(id[0]);
+    var col = parseInt(id[1]);
+    if (row < NUMROWS && col < NUMCOLS) {
+        var gem = $("#"+id);
+        if (gem.css("background-color") === color) {
+            var newlist = list.slice();
+            newlist.push(id);
+            // console.log(newlist);
+            removeGems((row+1).toString() + col.toString(), color, newlist);
+            removeGems(row.toString() + (col + 1).toString(), color, newlist);
+        } else {
+            if (list.length >= 3) {
+                // console.log("HOLY SHIT IT'S WORKING")
+                // console.log(list.length)
+                for (i=0; i < list.length; i++) {
+                    console.log("currently at " + id)
+                    console.log("id is " + list[i]);
+                    $("#" + list[i]).css("background-color", "black");
                 }
             }
+            removeGems((row+1).toString() + col.toString(), gem.css("background-color"), [id]);
+            removeGems(row.toString() + (col + 1).toString(), gem.css("background-color"), [id]);
         }
     }
 }
