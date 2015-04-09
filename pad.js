@@ -12,8 +12,9 @@ $(function() {
             var random = Math.floor(Math.random() * 6);
             var gem = $("<div class='gem'> </div>");
             var number_id = row.toString() + col.toString();
-            gem.attr("id", number_id)
-            gem.css("background-color", COLORS[random]);
+            gem.attr("id", number_id);
+            gem.addClass(COLORS[random]);
+            // gem.css("background-color", COLORS[random]);
             gem.css("top", row*GEMR+"px");
             gem.css("left", col*GEMR+"px");
             gem.appendTo("#board");
@@ -26,9 +27,10 @@ $(function() {
         LIST = [];
     });
     $(".gem").mouseup(function() {
-        // removeCol();
-        // removeRow();
-        removeGems("00", NaN, NaN);
+        removeCol();
+        removeRow();
+        console.log(LIST)
+        // removeGems("00", NaN, NaN);
         ACTIVE = false;
     });
 });
@@ -48,41 +50,41 @@ function move() {
     }
 }
 
-// function removeCol() {
-//     for (col=0; col < NUMCOLS; col++) {
-//         for (row=0; row < NUMROWS; row++) {
-//             var count = 1;
-//             while ($("#" + row.toString() + col.toString()).css("background-color") == $("#" + (row + 1).toString() + col.toString()).css("background-color")) {
-//                 count += 1;
-//                 row += 1;
-//             }
-//             if (count >= 3) {
-//                 for (y=0; y < count; y++) {
-//                     var number = (row-y).toString() + col.toString();
-//                     LIST.push(number);
-//                 }
-//             }
-//         }
-//     }
-// }
+function removeCol() {
+    for (col=0; col < NUMCOLS; col++) {
+        for (row=0; row < NUMROWS; row++) {
+            var count = 1;
+            while ($("#" + row.toString() + col.toString()).css("background-color") == $("#" + (row + 1).toString() + col.toString()).css("background-color")) {
+                count += 1;
+                row += 1;
+            }
+            if (count >= 3) {
+                for (y=0; y < count; y++) {
+                    var number = (row-y).toString() + col.toString();
+                    LIST.push(number);
+                }
+            }
+        }
+    }
+}
 
-// function removeRow() {
-//     for (col=0; col < NUMCOLS; col++) {
-//         for (row=0; row < NUMROWS; row++) {
-//             var count = 1;
-//             while ($("#" + row.toString() + col.toString()).css("background-color") == $("#" + row.toString() + (col+1).toString()).css("background-color")) {
-//                 count += 1;
-//                 col += 1;
-//             }
-//             if (count >= 3) {
-//                 for (y=0; y < count; y++) {
-//                     var number = row.toString() + (col-y).toString();
-//                     LIST.push(number);
-//                 }
-//             }
-//         }
-//     }
-// }
+function removeRow() {
+    for (col=0; col < NUMCOLS; col++) {
+        for (row=0; row < NUMROWS; row++) {
+            var count = 1;
+            while ($("#" + row.toString() + col.toString()).css("background-color") == $("#" + row.toString() + (col+1).toString()).css("background-color")) {
+                count += 1;
+                col += 1;
+            }
+            if (count >= 3) {
+                for (y=0; y < count; y++) {
+                    var number = row.toString() + (col-y).toString();
+                    LIST.push(number);
+                }
+            }
+        }
+    }
+}
 
 function removeGems(id, color, list) {
     var row = parseInt(id[0]);
@@ -108,5 +110,11 @@ function removeGems(id, color, list) {
             removeGems((row+1).toString() + col.toString(), gem.css("background-color"), [id]);
             removeGems(row.toString() + (col + 1).toString(), gem.css("background-color"), [id]);
         }
+    } else {
+        for (i=0; i < list.length; i++) {
+                    console.log("currently at " + id)
+                    console.log("id is " + list[i]);
+                    $("#" + list[i]).css("background-color", "black");
+                }
     }
 }
