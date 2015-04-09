@@ -6,25 +6,25 @@
 }
 
 .red {
-    background: radial-gradient(circle at 50% 120%, #7f0000, red 50%, #FFFFFF 100%);
+    background: radial-gradient(circle at 50% 120%, #000000, red 60%, #FFFFFF 100%);
 }
 
 .purple {
-    background: radial-gradient(circle at 50% 120%, #400040, purple 50%, #FFFFFF 100%);
+    background: radial-gradient(circle at 50% 120%, #000000, purple 60%, #FFFFFF 100%);
 }
 
 .pink {
-    background: radial-gradient(circle at 50% 120%, #cd1076, #ff1493 50%, #FFFFFF 100%);
+    background: radial-gradient(circle at 50% 120%, #000000, #ff69b4 60%, #FFFFFF 100%);
 }
 
 .blue {
-    background: radial-gradient(circle at 50% 120%, #00007f, blue 50%, #FFFFFF 100%);
+    background: radial-gradient(circle at 50% 120%, #000000, blue 60%, #FFFFFF 100%);
 }
 
 .green {
-    background: radial-gradient(circle at 50% 120%, #007f00, #00ff00 50%, #FFFFFF 100%);
+    background: radial-gradient(circle at 50% 120%, #000000, #00ff00 60%, #FFFFFF 100%);
 }
 
 .yellow {
-    background: radial-gradient(circle at 50% 120%, #000000, yellow 50%, #FFFFFF 100%);
+    background: radial-gradient(circle at 50% 120%, #000000, yellow 60%, #FFFFFF 100%);
 }
