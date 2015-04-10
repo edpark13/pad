@@ -18,7 +18,6 @@ $(function() {
             gem.css("top", row*GEMR+"px");
             gem.css("left", col*GEMR+"px");
             gem.appendTo("#board");
-            console.log($('#00').attr('class').split(" ")[1]);
         }
     }
     $(".gem").mouseover(move);
@@ -30,8 +29,8 @@ $(function() {
     $(".gem").mouseup(function() {
         removeCol();
         removeRow();
-        console.log(LIST)
-        // removeGems("00", NaN, NaN);
+        console.log(LIST);
+        gemFall();
         ACTIVE = false;
     });
 });
@@ -39,91 +38,75 @@ $(function() {
 
 function move() {
     if (ACTIVE) {
-        var top = $(this).css("top");
-        var left = $(this).css("left");
-        var id_swap = $(this).attr("id");
-        $(this).css("top", ACTIVEGEM.css("top"));
-        $(this).css("left", ACTIVEGEM.css("left"));
-        $(this).attr("id", ACTIVEGEM.attr('id'));
-        ACTIVEGEM.css("top", top);
-        ACTIVEGEM.css("left", left);
-        ACTIVEGEM.attr('id', id_swap);
+        moveGem(this, ACTIVEGEM);
     }
 }
 
+function moveGem(to, from) {
+    var top = $(to).css("top");
+    var left = $(to).css("left");
+    var id_swap = $(to).attr("id");
+    $(to).css("top", from.css("top"));
+    $(to).css("left", from.css("left"));
+    $(to).attr("id", from.attr('id'));
+    from.css("top", top);
+    from.css("left", left);
+    from.attr('id', id_swap);
+}
+
+
+
+
 function removeCol() {
     for (col=0; col < NUMCOLS; col++) {
-        for (row=0; row < NUMROWS; row++) {
-            var count = 1;
+        var count = 0;
+        var collection = [];
+        while (count <= NUMROWS) {
+            var gem = $("#" + count.toString() + col.toString());
             try {
-                while ($("#" + row.toString() + col.toString()).attr('class').split(" ")[1] == $("#" + (row + 1).toString() + col.toString()).attr('class').split(" ")[1]) {
-                count += 1;
-                row += 1;
-                }
-                if (count >= 3) {
-                    for (y=0; y < count; y++) {
-                        var number = (row-y).toString() + col.toString();
-                        console.log(number);
-                        LIST.push(number);
-                        console.log(LIST);
+                if (gem.attr('class').split(" ")[1] !== collection[0].attr('class').split(" ")[1]) {
+                    if (collection.length >= 3) {
+                        LIST.push(collection);
                     }
+                    collection = [];
                 }
-            } catch(error) {}
+            } catch(err) {
+                if (collection.length >= 3) {
+                    LIST.push(collection);
+                }
+                collection = [];
+            }
+            collection.push(gem);
+            count++;
         }
     }
 }
 
 function removeRow() {
-    for (col=0; col < NUMCOLS; col++) {
-        for (row=0; row < NUMROWS; row++) {
-            var count = 1;
+    for (row=0; row < NUMROWS; row++) {
+        var count = 0;
+        var collection = [];
+        while (count <= NUMCOLS) {
+            var gem = $("#" + row.toString() + count.toString());
             try {
-                while ($("#" + row.toString() + col.toString()).attr('class').split(" ")[1] == $("#" + row.toString() + (col+1).toString()).attr('class').split(" ")[1]) {
-                    count += 1;
-                    col += 1;
-                }
-                if (count >= 3) {
-                    for (y=0; y < count; y++) {
-                        var number = row.toString() + (col-y).toString();
-                        console.log(number);
-                        LIST.push(number);
-                        console.log(LIST);
+                if (gem.attr('class').split(" ")[1] !== collection[0].attr('class').split(" ")[1]) {
+                    if (collection.length >= 3) {
+                        LIST.push(collection);
                     }
+                    collection = [];
                 }
-            } catch(error) {}
+            } catch(err) {
+                if (collection.length >= 3) {
+                    LIST.push(collection);
+                }
+                collection = [];
+            }
+            collection.push(gem);
+            count++;
         }
     }
 }
 
-// function removeGems(id, color, list) {
-//     var row = parseInt(id[0]);
-//     var col = parseInt(id[1]);
-//     if (row < NUMROWS && col < NUMCOLS) {
-//         var gem = $("#"+id);
-//         if (gem.css("background-color") === color) {
-//             var newlist = list.slice();
-//             newlist.push(id);
-//             // console.log(newlist);
-//             removeGems((row+1).toString() + col.toString(), color, newlist);
-//             removeGems(row.toString() + (col + 1).toString(), color, newlist);
-//         } else {
-//             if (list.length >= 3) {
-//                 // console.log("HOLY SHIT IT'S WORKING")
-//                 // console.log(list.length)
-//                 for (i=0; i < list.length; i++) {
-//                     console.log("currently at " + id)
-//                     console.log("id is " + list[i]);
-//                     $("#" + list[i]).css("background-color", "black");
-//                 }
-//             }
-//             removeGems((row+1).toString() + col.toString(), gem.css("background-color"), [id]);
-//             removeGems(row.toString() + (col + 1).toString(), gem.css("background-color"), [id]);
-//         }
-//     } else {
-//         for (i=0; i < list.length; i++) {
-//                     console.log("currently at " + id)
-//                     console.log("id is " + list[i]);
-//                     $("#" + list[i]).css("background-color", "black");
-//                 }
-//     }
-// }
+function gemFall(){
+
+}
