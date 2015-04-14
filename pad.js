@@ -48,21 +48,16 @@ function makeGems() {
 
 function move() {
     if (ACTIVE) {
-        moveGem(this, ACTIVEGEM);
+        var top = $(to).css("top");
+        var left = $(to).css("left");
+        var id_swap = $(to).attr("id");
+        $(to).css("top", from.css("top"));
+        $(to).css("left", from.css("left"));
+        $(to).attr("id", from.attr('id'));
+        from.css("top", top);
+        from.css("left", left);
+        from.attr('id', id_swap);
     }
-}
-
-
-function moveGem(to, from) {
-    var top = $(to).css("top");
-    var left = $(to).css("left");
-    var id_swap = $(to).attr("id");
-    $(to).css("top", from.css("top"));
-    $(to).css("left", from.css("left"));
-    $(to).attr("id", from.attr('id'));
-    from.css("top", top);
-    from.css("left", left);
-    from.attr('id', id_swap);
 }
 
 
@@ -140,12 +135,12 @@ function gemFall() {
             var row = bottom;
             while (row > -1) {
                 var gem = $("#" + row.toString() + col.toString());
-                if (gem.length) { // move to the bottom
+                if (gem.length) {
                     gem.removeAttr("id");
                     gem.attr("id", bottom.toString() + col.toString());
                     gem.css("top", bottom*GEMR+"px");
                     break;
-                } else { // keep looking
+                } else {
                     row--;
                 }
             }
