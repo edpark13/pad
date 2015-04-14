@@ -6,21 +6,14 @@ var ACTIVEGEM = 0;
 var ACTIVE = false;
 var LIST = [];
 
+
 $(function() {
     makeGems();
-    $(".gem").mouseover(move);
-    $(".gem").mousedown(function() {
-        ACTIVEGEM = $(this);
-        ACTIVE = true;
-        LIST = [];
-    });
-    $(".gem").mouseup(function() {
-        remove();
-        ACTIVE = false;
-    });
 });
 
+
 function makeGems() {
+    var createdNewGems = false;
     for (col=0; col < NUMCOLS; col++) {
         for (row=0; row < NUMROWS; row++) {
             var test = $("#" + row.toString() + col.toString());
@@ -30,14 +23,25 @@ function makeGems() {
                 var number_id = row.toString() + col.toString();
                 gem.attr("id", number_id);
                 gem.addClass(COLORS[random]);
-                // gem.css("background-color", COLORS[random]);
                 gem.css("top", row*GEMR+"px");
                 gem.css("left", col*GEMR+"px");
                 gem.appendTo("#board");
-            } else {
-                console.log(test)
+                createdNewGems = true;
+                gem.mouseover(move);
+                gem.mousedown(function() {
+                    ACTIVEGEM = $(this);
+                    ACTIVE = true;
+                    LIST = [];
+                });
+                gem.mouseup(function() {
+                    remove();
+                    ACTIVE = false;
+                });
             }
         }
+    }
+    if (createdNewGems) {
+        remove();
     }
 }
 
@@ -47,6 +51,7 @@ function move() {
         moveGem(this, ACTIVEGEM);
     }
 }
+
 
 function moveGem(to, from) {
     var top = $(to).css("top");
@@ -60,11 +65,13 @@ function moveGem(to, from) {
     from.attr('id', id_swap);
 }
 
+
 function remove() {
     removeCol();
     removeRow();
     if (LIST.length > 0) {
         gemFall();
+        makeGems();
     }
 }
 
@@ -94,6 +101,7 @@ function removeCol() {
     }
 }
 
+
 function removeRow() {
     for (row=0; row < NUMROWS; row++) {
         var count = 0;
@@ -119,6 +127,7 @@ function removeRow() {
     }
 }
 
+
 function gemFall() {
     for (collection=0; collection < LIST.length; collection++) {
         for (igem=0; igem < LIST[collection].length; igem++) {
@@ -133,7 +142,7 @@ function gemFall() {
                 var gem = $("#" + row.toString() + col.toString());
                 if (gem.length) { // move to the bottom
                     gem.removeAttr("id");
-                    gem.attr("#" + bottom.toString() + col.toString());
+                    gem.attr("id", bottom.toString() + col.toString());
                     gem.css("top", bottom*GEMR+"px");
                     break;
                 } else { // keep looking
@@ -142,5 +151,4 @@ function gemFall() {
             }
         }
     }
-    makeGems();
 }
