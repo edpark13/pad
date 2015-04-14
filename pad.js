@@ -1,6 +1,6 @@
-var NUMROWS = 7;
+var NUMROWS = 5;
 var NUMCOLS = 6;
-var GEMR = 50;
+var GEMR = 75;
 var COLORS = ["red", "blue", "green", "yellow", "purple", "pink"];
 var ACTIVEGEM = 0;
 var ACTIVE = false;
@@ -29,7 +29,6 @@ $(function() {
     $(".gem").mouseup(function() {
         removeCol();
         removeRow();
-        console.log(LIST);
         gemFall();
         ACTIVE = false;
     });
@@ -107,6 +106,20 @@ function removeRow() {
     }
 }
 
-function gemFall(){
-
+function gemFall() {
+    for (collection=0; collection < LIST.length; collection++) {
+        for (igem=0; igem < LIST[collection].length; igem++) {
+            gem = LIST[collection][igem];
+            if (!gem.hasClass("remove")) {
+                gem.addClass("remove");
+            }
+        }
+    }
+    for (row = NUMROWS - 1; row > -1; row--) {
+        var finishedWithThisRow = false;
+        var col = 0;
+        while (!finishedWithThisRow) {
+            
+        }
+    }
 }
