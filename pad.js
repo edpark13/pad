@@ -48,15 +48,15 @@ function makeGems() {
 
 function move() {
     if (ACTIVE) {
-        var top = $(to).css("top");
-        var left = $(to).css("left");
-        var id_swap = $(to).attr("id");
-        $(to).css("top", from.css("top"));
-        $(to).css("left", from.css("left"));
-        $(to).attr("id", from.attr('id'));
-        from.css("top", top);
-        from.css("left", left);
-        from.attr('id', id_swap);
+        var top = $(this).css("top");
+        var left = $(this).css("left");
+        var id_swap = $(this).attr("id");
+        $(this).css("top", ACTIVEGEM.css("top"));
+        $(this).css("left", ACTIVEGEM.css("left"));
+        $(this).attr("id", ACTIVEGEM.attr('id'));
+        ACTIVEGEM.css("top", top);
+        ACTIVEGEM.css("left", left);
+        ACTIVEGEM.attr('id', id_swap);
     }
 }
 
