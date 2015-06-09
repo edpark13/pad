@@ -66,6 +66,7 @@ function remove() {
     removeRow();
     if (LIST.length > 0) {
         gemFall();
+        setTimeout(removeGems(), 10);
         makeGems();
     }
 }
@@ -123,13 +124,28 @@ function removeRow() {
 }
 
 
-function gemFall() {
+function gemMark() {
+    for (collection=0; collection < LIST.length; collection++) {
+        for (igem=0; igem < LIST[collection].length; igem++) {
+            var gem = LIST[collection][igem];
+            gem.removeClass(gem.attr('class').split(" ")[1]).addClass("explode");
+            gem.remove();
+        }
+    }
+}
+
+
+function removeGems() {
     for (collection=0; collection < LIST.length; collection++) {
         for (igem=0; igem < LIST[collection].length; igem++) {
             var gem = LIST[collection][igem];
             gem.remove();
         }
     }
+}
+
+
+function gemFall() {
     for (col = 0; col < NUMCOLS; col++) {
         for (bottom = NUMROWS - 1; bottom > 0; bottom--) {
             var row = bottom;

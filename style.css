@@ -28,3 +28,7 @@
 .yellow {
     background: radial-gradient(circle at 50% 120%, #000000, yellow 60%, #FFFFFF 100%);
 }
+
+.explode {
+    background-color: black;   
+}
