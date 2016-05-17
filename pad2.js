@@ -47,29 +47,6 @@ function Gem(x, y) {
     gem.on('mouseup', function() {
         ACTIVE = false;
     })
-
-    // this.move = function() {
-    //     if (ACTIVE) {
-    //         var top = this.y;
-    //         var left = this.x;
-    //         var id = this.id;
-    //         console.log(this.id);
-    //         $(this.gem).css("top", ACTIVEGEM.y*GEMR+"px");
-    //         $(this.gem).css("left", ACTIVEGEM.x*GEMR+"px");
-    //         $(this.gem).attr("id", ACTIVEGEM.id);
-    //         $(this).id = ACTIVEGEM.id;
-    //         console.log(this.id);
-    //         console.log(ACTIVEGEM.id);
-    //         $(this).x = ACTIVEGEM.x;
-    //         $(this).y = ACTIVEGEM.y;
-    //         ACTIVEGEM.gem.css("top", top*GEMR+"px");
-    //         ACTIVEGEM.gem.css("left", left*GEMR+"px");
-    //         ACTIVEGEM.gem.attr("id", id);
-    //         ACTIVEGEM.id = id;
-    //         ACTIVEGEM.x = left;
-    //         ACTIVEGEM.y = top;
-    //     }
-    // };
 };
 
 
