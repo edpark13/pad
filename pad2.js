@@ -8,6 +8,7 @@ var ACTIVE = false;
 function Gem(x, y) {
     var gem = $("<div class='gem'> </div>");
     var self = this;
+    this.gem = gem;
     this.x = x;
     this.y = y;
     this.color = COLORS[Math.floor(Math.random()*COLORS.length)];
@@ -19,36 +20,56 @@ function Gem(x, y) {
     gem.appendTo("#board");
 
     gem.on("mousedown", function() {
-        ACTIVEGEM = $(this);
-        var x = this.color;
-        console.log(x);
-        console.log(ACTIVEGEM.x);
+        ACTIVEGEM = self;
         ACTIVE = true;
     });
 
-    gem.on('mouseenter', function() {
-        self.move();
+    gem.on('mouseover', function() {
+        if (ACTIVE) {
+            var top = self.y;
+            var left = self.x;
+            var id = self.id;
+            $(this).css("top", ACTIVEGEM.y*GEMR+"px");
+            $(this).css("left", ACTIVEGEM.x*GEMR+"px");
+            $(this).attr("id", ACTIVEGEM.id);
+            self.id = ACTIVEGEM.id;
+            self.x = ACTIVEGEM.x;
+            self.y = ACTIVEGEM.y;
+            ACTIVEGEM.gem.css("top", top*GEMR+"px");
+            ACTIVEGEM.gem.css("left", left*GEMR+"px");
+            ACTIVEGEM.gem.attr("id", id);
+            ACTIVEGEM.id = id;
+            ACTIVEGEM.x = left;
+            ACTIVEGEM.y = top;
+        }
     });
 
     gem.on('mouseup', function() {
         ACTIVE = false;
     })
 
-    this.move = function() {
-        if (ACTIVE) {
-            var top = this.y;
-            var left = this.x;
-            // console.log(top.toString() + left.toString());
-            var id_swap = this.id;
-            console.log(ACTIVEGEM.y*GEMR+"px");
-            $(this).css("top", ACTIVEGEM.y*GEMR+"px");
-            $(this).css("left", ACTIVEGEM.x*GEMR+"px");
-            $(this).id =  ACTIVEGEM.id;
-            ACTIVEGEM.css("top", top*GEMR+"px");
-            ACTIVEGEM.css("left", left*GEMR+"px");
-            ACTIVEGEM.id = id_swap;
-        }
-    };
+    // this.move = function() {
+    //     if (ACTIVE) {
+    //         var top = this.y;
+    //         var left = this.x;
+    //         var id = this.id;
+    //         console.log(this.id);
+    //         $(this.gem).css("top", ACTIVEGEM.y*GEMR+"px");
+    //         $(this.gem).css("left", ACTIVEGEM.x*GEMR+"px");
+    //         $(this.gem).attr("id", ACTIVEGEM.id);
+    //         $(this).id = ACTIVEGEM.id;
+    //         console.log(this.id);
+    //         console.log(ACTIVEGEM.id);
+    //         $(this).x = ACTIVEGEM.x;
+    //         $(this).y = ACTIVEGEM.y;
+    //         ACTIVEGEM.gem.css("top", top*GEMR+"px");
+    //         ACTIVEGEM.gem.css("left", left*GEMR+"px");
+    //         ACTIVEGEM.gem.attr("id", id);
+    //         ACTIVEGEM.id = id;
+    //         ACTIVEGEM.x = left;
+    //         ACTIVEGEM.y = top;
+    //     }
+    // };
 };
 
 
