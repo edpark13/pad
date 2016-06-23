@@ -4,6 +4,7 @@ var GEMR = 75;
 var COLORS = ["red", "blue", "green", "yellow", "purple", "pink"];
 var ACTIVEGEM;
 var ACTIVE = false;
+var BOARD = [];
 
 function Gem(x, y) {
     var gem = $("<div class='gem'> </div>");
@@ -46,14 +47,36 @@ function Gem(x, y) {
 
     gem.on('mouseup', function() {
         ACTIVE = false;
+        matchGems();
     })
 };
 
 
 $(function() {
     for (x=0; x < NUMCOLS; x++) {
+        BOARD[x] = []
         for (y=0; y < NUMROWS; y++) {
             var gem = new Gem(x, y);
+            BOARD[x][y] = gem;
         }
     }
 });
+
+
+function matchGems() {
+    gems_y = [];
+    for (x=0; x < NUMCOLS; x++) {
+        for (y=0; y < NUMROWS; y++) {
+        }
+    }
+    gems_x = [];
+    for (y=0; y < NUMROWS; y++) {
+        for (x=0; x < NUMCOLS; x++) {
+        }
+    }
+}
+
+
+function match(gems) {
+
+}
