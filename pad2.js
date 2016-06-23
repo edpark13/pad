@@ -5,6 +5,7 @@ var COLORS = ["red", "blue", "green", "yellow", "purple", "pink"];
 var ACTIVEGEM;
 var ACTIVE = false;
 var BOARD = [];
+var ALL_MATCHED = [];
 
 function Gem(x, y) {
     var gem = $("<div class='gem'> </div>");
@@ -73,17 +74,33 @@ $(function() {
 
 
 function matchGems() {
+    var all_matched = [];
     for (y=0; y < NUMROWS; y++) {
-        gems = [];
+        var gems = [];
         for (x=0; x < NUMCOLS; x++) {
             match(BOARD[x]);
             gems.push(BOARD[x][y]);
         }
         match(gems);
     }
+    console.log(ALL_MATCHED);
 }
 
 
 function match(gems) {
-    console.log(gems);
+    var color = "";
+    var matched = [];
+    for (i=0; i < gems.length; i++) {
+        gem = gems[i];
+        if (color == gem.color || color === "") {
+            color = gem.color
+            matched.push(gem);
+        } else {
+            if (matched.length >= 3) {
+                ALL_MATCHED.push(matched);
+            }
+            color = gem.color;
+            matched = [];
+        }
+    }
 }
