@@ -74,7 +74,6 @@ $(function() {
 
 
 function matchGems() {
-    var all_matched = [];
     for (y=0; y < NUMROWS; y++) {
         var gems = [];
         for (x=0; x < NUMCOLS; x++) {
@@ -83,7 +82,9 @@ function matchGems() {
         }
         match(gems);
     }
-    console.log(ALL_MATCHED);
+    unique_id = new Set();
+
+
 }
 
 
