@@ -14,11 +14,34 @@ function Gem(x, y) {
     this.y = y;
     this.color = COLORS[Math.floor(Math.random()*COLORS.length)];
     this.id = y.toString() + x.toString();
+
     gem.attr("id", this.id);
     gem.addClass(this.color);
     gem.css("top", y*GEMR+"px");
     gem.css("left", x*GEMR+"px");
     gem.appendTo("#board");
+
+    this.switch = function(other) {
+        var top = this.y;
+        var left = this.x;
+        var id = this.id;
+        var gem = this.gem;
+        gem.css("top", other.y*GEMR+"px");
+        gem.css("left", other.x*GEMR+"px");
+        gem.attr("id", other.id);
+        this.id = other.id;
+        this.x = other.x;
+        this.y = other.y;
+        other.gem.css("top", top*GEMR+"px");
+        other.gem.css("left", left*GEMR+"px");
+        other.gem.attr("id", id);
+        other.id = id;
+        other.x = left;
+        other.y = top;
+
+        BOARD[left][top] = other;
+        BOARD[this.x][this.y] = this;
+    }
 
     gem.on("mousedown", function() {
         ACTIVEGEM = self;
@@ -27,21 +50,7 @@ function Gem(x, y) {
 
     gem.on('mouseover', function() {
         if (ACTIVE) {
-            var top = self.y;
-            var left = self.x;
-            var id = self.id;
-            $(this).css("top", ACTIVEGEM.y*GEMR+"px");
-            $(this).css("left", ACTIVEGEM.x*GEMR+"px");
-            $(this).attr("id", ACTIVEGEM.id);
-            self.id = ACTIVEGEM.id;
-            self.x = ACTIVEGEM.x;
-            self.y = ACTIVEGEM.y;
-            ACTIVEGEM.gem.css("top", top*GEMR+"px");
-            ACTIVEGEM.gem.css("left", left*GEMR+"px");
-            ACTIVEGEM.gem.attr("id", id);
-            ACTIVEGEM.id = id;
-            ACTIVEGEM.x = left;
-            ACTIVEGEM.y = top;
+            self.switch(ACTIVEGEM);
         }
     });
 
@@ -64,19 +73,17 @@ $(function() {
 
 
 function matchGems() {
-    gems_y = [];
-    for (x=0; x < NUMCOLS; x++) {
-        for (y=0; y < NUMROWS; y++) {
-        }
-    }
-    gems_x = [];
     for (y=0; y < NUMROWS; y++) {
+        gems = [];
         for (x=0; x < NUMCOLS; x++) {
+            match(BOARD[x]);
+            gems.push(BOARD[x][y]);
         }
+        match(gems);
     }
 }
 
 
 function match(gems) {
-
+    console.log(gems);
 }
